@@ -13,7 +13,18 @@ const itemArray = new Array(9).fill("empty");
 const App = () => {
   const [isCross, setIsCross] = useState(false);
   const [winMessage, setWinMessage] = useState("");
+  const [gameOver,setGameOver]=useState(false);//in case no one wins
 
+  const checkAllBoxes=()=>{
+    if(!itemArray.find(
+      (element)=>{
+        return element==="empty";
+      }
+    ))
+    {
+      setGameOver(true);
+    }
+  }
   const reloadGame = () => {
     setIsCross(false);
     setWinMessage("");
@@ -84,7 +95,7 @@ const App = () => {
     } else {
       return toast("already filled", { type: "error" });
     }
-
+    checkAllBoxes();
     checkIsWinner();
   };
 
@@ -93,7 +104,7 @@ const App = () => {
 
     <Nav className="mynav">
         <NavItem>
-          <NavLink href="https://www.facebook.com/">Rules</NavLink>
+          <NavLink href="https://www.exploratorium.edu/brain_explorer/tictactoe.html">Rules</NavLink>
         </NavItem>
         <NavItem>
           <NavLink href="https://www.google.com/">Take me to Google!</NavLink>
@@ -113,9 +124,16 @@ const App = () => {
               </Button>
             </div>
           ) : (
-            <h1 className="text-center text-warning">
+              <h1 className="text-center text-warning turns">
               {isCross ? "Cross" : "Circle"} turns
             </h1>
+          )};
+          {gameOver ?(
+              <Button color="success" block onClick={reloadGame} className="mb-2">
+                Reload the game
+            </Button>
+          ):(
+            ''
           )}
           <div className="grid">
             {itemArray.map((item, index) => (
