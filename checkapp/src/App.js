@@ -1,5 +1,10 @@
 import './App.css';
 import React,{useState} from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+import {Card} from "react-bootstrap";
+import ReactCardCarousel from "react-card-carousel";
+
 
 function App() {
   const [folderOneClicked,setfolderOneClicked]=useState(false);
@@ -27,18 +32,51 @@ function App() {
       >
         Click me!
       </button>
-      {folderOneClicked && 
+     <div className="container">
+     <div className="card" style={{width: "18rem"}}>
+                  <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
+              <div className="carousel-inner">
+                {/* <div class="carousel-item active">
+                  <img src="..." class="d-block w-100" alt="..."></img>
+                </div> */}
+                {folderOneClicked && 
         displayImages.map((item,idx)=>{
-          console.log(idx,`./images/${item}`)
+          // console.log(idx,`./images/${item}`)
+          if(idx==0)
+          {
+            return(
+              <div className="carousel-item active" key={idx}>
+                <img src={`${item}`}
+            className="d-block w-100" alt="..."></img>
+              </div>
+              
+            )
+          }
+         else{
           return(
-            <div key={idx}>
+            <div className="carousel-item" key={idx}>
               <img src={`${item}`}
-          ></img>
+          className="d-block w-100" alt="..."></img>
             </div>
             
           )
+         }
         })
       }
+               
+              </div>
+              <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span className="sr-only">Previous</span>
+              </a>
+              <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                <span className="sr-only">Next</span>
+              </a>
+            </div>
+      </div> 
+      </div> 
+     
     </div>
   );
 }
